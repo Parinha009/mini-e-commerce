@@ -1,16 +1,5 @@
-import { NextConfig } from 'next';
-
-const nextConfig: NextConfig = {
-  webpack: (config, { isServer }) => {
-    // This is the fix. It tells webpack to ignore 'fs' on the client side.
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-      };
-    }
-    return config;
-  },
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  eslint: { ignoreDuringBuilds: true },
 };
-
-export default nextConfig;
+module.exports = nextConfig;

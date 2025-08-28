@@ -45,7 +45,7 @@ export default function SignupForm() {
           <div className="text-center">
             <Image src="/logo.svg" alt="FitFuel Logo" width={60} height={60} className="mx-auto" />
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-              Try Fitfuel for Free!
+              Create your Fitfuel account
             </h2>
           </div>
 
@@ -54,17 +54,16 @@ export default function SignupForm() {
             <button
               type="button"
               onClick={handleGoogle}
-              className="w-full flex justify-center items-center gap-3 py-3 px-4 border border-gray-300 rounded-full hover:bg-gray-100 transition-colors"
+              className="w-full flex justify-center items-center gap-3 py-3 px-4 border border-gray-300 rounded-full hover:bg-gray-100 transition-colors font-medium"
             >
-              <span>Signup / Login with Google</span>
+              <span>Sign up with Google</span>
             </button>
-            {/* Facebook can be added similarly if enabled in Supabase */}
           </div>
 
           {/* Divider */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center my-4">
             <div className="h-px bg-gray-300 flex-grow"></div>
-            <p className="mx-4 text-sm text-gray-500">Or Log in using email</p>
+            <span className="mx-4 text-sm text-gray-500">or sign up with email</span>
             <div className="h-px bg-gray-300 flex-grow"></div>
           </div>
           
@@ -77,6 +76,7 @@ export default function SignupForm() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-green-500"
+              autoComplete="email"
             />
             <input
               type="password"
@@ -85,19 +85,21 @@ export default function SignupForm() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-green-500"
+              autoComplete="new-password"
             />
             <button
               type="submit"
               className="w-full bg-brand-dark text-white font-bold p-3 rounded-full hover:bg-gray-700 transition-colors"
             >
-              Signup
+              Sign up
             </button>
             {error && <p className="text-red-600 text-sm">{error}</p>}
           </form>
           
           {/* Login Link */}
-          <p className="text-center text-sm text-gray-600">
-            Or <Link href="/login" className="font-medium text-brand-green hover:underline">Signup using email</Link>
+          <p className="text-center text-sm text-gray-600 mt-4">
+            Already have an account?{' '}
+            <Link href="/login" className="font-medium text-brand-green hover:underline">Log in</Link>
           </p>
 
         </div>
