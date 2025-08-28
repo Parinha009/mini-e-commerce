@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js" // tells Prisma to generate a JS/TS client you can import
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id        Int         @id @default(autoincrement()) // primary key, auto-increment integer
+  name      String // product name (text)
+  price     Int // store price in cents (integer) to avoid float issues
+  createdAt DateTime    @default(now()) // timestamp automatically set on insert
+  items     OrderItem[] // back relation: all order-items that reference this product
+}
+
+model Order {
+  id         Int         @id @default(autoincrement())
+  userId     Int
+  user       User        @relation(fields: [userId], references: [id])
+  status     String      @default("PENDING") // PENDING|PAID|CANCELLED
+  totalCents Int         @default(0)
+  createdAt  DateTime    @default(now())
+  items      OrderItem[] // 1:n
+}
+
+model OrderItem {
+  id             Int @id @default(autoincrement())
+  orderId        Int
+  productId      Int
+  quantity       Int @default(1)
+  unitPriceCents Int // snapshot of product price at purchase
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  email     String   @unique
+  password  String
+  role      String   @default("customer")
+  createdAt DateTime @default(now())
+  Orders     Order[]
+}
+
+
